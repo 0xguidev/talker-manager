@@ -5,7 +5,7 @@ const readContentFile = async (path) => {
     const content = await fs.readFile(path, 'utf8');
     return JSON.parse(content);
   } catch (error) {
-    console.error(error.message)
+    return null;
   }
 };
 

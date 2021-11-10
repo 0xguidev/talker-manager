@@ -1,8 +1,9 @@
 const router = require('express').Router();
 const {
   readContentFile,
-  writeContentFile,
+  // writeContentFile,
 } = require('../helpers/readWriteFile');
+
 const PATH_FILE = './talker.json';
 
 router.get('/', async (_req, res) => {
