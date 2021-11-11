@@ -22,15 +22,15 @@ router.get(
   async (req, res) => {
     const { q } = req.query;
     const talkers = await readContentFile(PATH_FILE);
-    const filteredTalkers = talkers.filter((t) => t.name.includes(q))
+    const filteredTalkers = talkers.filter((t) => t.name.includes(q));
 
-    if(q === undefined) {
-      return res.status(200).json(talkers)
+    if (q === undefined) {
+      return res.status(200).json(talkers);
     }
 
     res.status(200).json(filteredTalkers);
-  }
-)
+  },
+);
 
 router.get('/', async (_req, res) => {
   const talker = await readContentFile(PATH_FILE) || [];
