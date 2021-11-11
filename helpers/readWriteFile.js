@@ -24,9 +24,21 @@ const writeContentFile = async (path, content) => {
 
 const updateContentFile = async (path, content) => {
   try {
-  await fs.writeFile(path, JSON.stringify(content));
+    await fs.writeFile(path, JSON.stringify(content));
 
-  return content;
+    return content;
+  } catch (err) {
+    return null;
+  }
+};
+
+const deleteContentFile = async (path, ID) => {
+  try {
+  const talkers = await readContentFile(path);
+        
+  const newTalkers = talkers.filter((t) => t.id !== parseInt(ID, 10));
+
+  await fs.writeFile(path, JSON.stringify(newTalkers));
   } catch (err) {
     return null;
   }
@@ -36,4 +48,5 @@ module.exports = {
   readContentFile,
   writeContentFile,
   updateContentFile,
+  deleteContentFile,
 };

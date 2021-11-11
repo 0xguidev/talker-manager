@@ -3,6 +3,7 @@ const {
   readContentFile,
   writeContentFile,
   updateContentFile,
+  deleteContentFile,
 } = require('../helpers/readWriteFile');
 
 const {
@@ -68,8 +69,19 @@ router.put(
     talkers[palestrante] = { ...talkers[palestrante], name, age, talk };
 
     await updateContentFile(PATH_FILE, talkers);
-
     res.status(200).json(talkers[palestrante]);
+  },
+  );
+  
+  router.delete(
+    '/:id',
+    isValidToken,
+    async (req, res) => {
+      const { id } = req.params;
+
+      await deleteContentFile(PATH_FILE, id);
+    
+    res.status(200).json({ message: 'Pessoa palestrante deletada com sucesso' });
   },
 );
 
