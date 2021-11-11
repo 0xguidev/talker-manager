@@ -79,7 +79,7 @@ const isTalkerAgeValid = (req, res, next) => {
 const isTalkerTalkValid = (req, res, next) => {
   const { talk } = req.body;
  
-  if (!talk || !talk.watchedAt || !talk.rate) {
+  if (!talk || !talk.watchedAt || talk.rate === undefined) { //  
         const msgField = 'O campo "talk" é obrigatório e "watchedAt" e "rate" não podem ser vazios';
         return res.status(400).json({ message: msgField });
       }

@@ -2,6 +2,7 @@ const router = require('express').Router();
 const {
   readContentFile,
   writeContentFile,
+  updateContentFile,
 } = require('../helpers/readWriteFile');
 
 const {
@@ -46,6 +47,29 @@ router.post(
     };
     await writeContentFile(PATH_FILE, newTalker);
     res.status(201).json(newTalker);
+  },
+);
+
+router.put(
+  '/:id',
+  isValidToken,
+  isTalkerNameValid,
+  isTalkerAgeValid,
+  isTalkerTalkValid,
+  isTalkerTalkRateValid,
+  async (req, res) => {
+    const { id } = req.params;
+    const { name, age, talk } = req.body;
+    const talkers = await readContentFile(PATH_FILE);
+    const palestrante = talkers.findIndex((t) => t.id === parseInt(id, 10));
+    
+    if (palestrante === -1) return res.status(400).json({ message: 'Talker not found' });
+
+    talkers[palestrante] = { ...talkers[palestrante], name, age, talk };
+
+    await updateContentFile(PATH_FILE, talkers);
+
+    res.status(200).json(talkers[palestrante]);
   },
 );
 
